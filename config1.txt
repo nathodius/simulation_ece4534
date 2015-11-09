@@ -1,0 +1,3 @@
+system=rover rotationSpeed=0 forwardSpeed=1 rotationSpeedError=2 forwardSpeedError=3 x=4 y=5 orientation=45 port=/dev/tty.usbserial-A702ZKVY
+system=sensor sampleRate=0 sampleRateError=1 rotationRate=2 rotationRateError=3 rangeOfMotion=4 buff=5 port=/dev/tty.usbserial-A702ZIQS
+system=control
