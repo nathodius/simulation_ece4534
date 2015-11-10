@@ -190,130 +190,18 @@ def main(argv):
        	# Control messages rover. 
        	# Rover Messages control. 
         if loopCount % 1000 == 0:
-        	#if systs[1].getPort() != None:
-        	# print("\n ----------MESSAGING---------------")
-        	# print ("Time runing", time)
-        	# comm.sendMessage(systs[1].getSequenceNum(), systs[1].getLastLocation()[0], systs[1].getLastLocation()[1], systs[1].getComm())
-        	# print("Sensor messaged sampled rover location to control", systs[1].getLastLocation()[0], systs[1].getLastLocation()[1])
-        	# # Rover receives message
-        	# receivedMessage = comm.receiveMessage(systs[0].getComm())
-        	# print ("Control messaged rover.", receivedMessage[0], receivedMessage[1])
-        	# print("")
 
-        	# if loopCount < 9000:
-        	#     r.move(1000, roverCommandPeriod)
-        	# elif loopCount < 10000:
-        	#     r.move(-5, roverCommandPeriod)
-        	# elif loopCount < 20000:
-        	# 	r.move(1000, roverCommandPeriod)
-        	# elif loopCount < 21000:
-        	# 	r.move(5, roverCommandPeriod)
-        	# elif loopCount < 30000:
-        	# 	r.move(1000, roverCommandPeriod)
-        	# elif loopCount < 31000:
-        	# 	r.move(-5, roverCommandPeriod)
-        	# elif loopCount < 40000:
-        	# 	r.move(1000, roverCommandPeriod)
-        	# elif loopCount < 41000:
-        	# 	r.move(5, roverCommandPeriod)
-        	# elif loopCount < 50000:
-        	# 	r.move(1000, roverCommandPeriod)
-        	# elif loopCount < 51000:
-        	# 	r.move(-5, roverCommandPeriod)
-        	# elif loopCount < 60000:
-        	# 	r.move(1000, roverCommandPeriod)
-        	# elif loopCount < 61000:
-        	# 	r.move(5, roverCommandPeriod)
-        	# elif loopCount < 70000:
-        	# 	r.move(1000, roverCommandPeriod)
-        	# elif loopCount < 71000:
-        	# 	r.move(-5, roverCommandPeriod)
-        	# else:
-        	# 	r.move(1000, roverCommandPeriod)
-        	# elif loopCount < 6000:
-        	#     r.move(5, roverCommandPeriod)
-        	# elif loopCount < 10000:
-        	# 	r.move(1000, roverCommandPeriod)
-        		#r.move(-5, roverCommandPeriod)
-        	#r.move(5, roverCommandPeriod)
-
-            if loopCount < 10000:
-                comm.sendMessage(systs[1].getSequenceNum(), systs[1].getLastLocation()[0], systs[1].getLastLocation()[1], systs[1].getComm())
-                print("Sensor messaged sampled rover location to control", systs[1].getLastLocation()[0], systs[1].getLastLocation()[1])
-                receivedMessage = comm.receiveMessage(systs[0].getComm())
-                print ("Control messaged rover.", receivedMessage[0], receivedMessage[1])
-                r.move(receivedMessage[1], roverCommandPeriod)
-            elif loopCount < 11000:
-                if receivedMessage[0] == 0:
-            	    r.move(receivedMessage[1], roverCommandPeriod)
-                elif receivedMessage[0] == 1:
-                    r.move(0-receivedMessage[1], roverCommandPeriod)
-            elif loopCount < 14000:
-             	r.move(1000, roverCommandPeriod)
-            elif loopCount < 15000:
-             	r.move(1, roverCommandPeriod)
-            elif loopCount < 18000:
-            	r.move(1000, roverCommandPeriod)
-            elif loopCount < 19000:
-             	r.move(1, roverCommandPeriod)
-            elif loopCount < 25000:
-            	r.move(1000, roverCommandPeriod)
-            elif loopCount < 26000:
-             	r.move(-1, roverCommandPeriod)
-            elif loopCount < 29000:
-              	r.move(1000, roverCommandPeriod)
-            elif loopCount < 30000:
-              	r.move(1, roverCommandPeriod)
-            elif loopCount < 33000:
-             	r.move(1000, roverCommandPeriod)
-            elif loopCount < 34000:
-              	r.move(1, roverCommandPeriod)
-            elif loopCount < 37000:
-              	r.move(1000, roverCommandPeriod)
-            elif loopCount < 38000:
-                	r.move(1, roverCommandPeriod)
-            elif loopCount < 41000:
-                	r.move(1000, roverCommandPeriod)
-            elif loopCount < 42000:
-                	r.move(1, roverCommandPeriod)
-            elif loopCount < 45000:
-                	r.move(1000, roverCommandPeriod)
-            elif loopCount < 46000:
-                	r.move(1, roverCommandPeriod)
-            elif loopCount < 65000:
-                	r.move(1000, roverCommandPeriod)
-
-            elif loopCount < 66000:
-              	r.move(-1, roverCommandPeriod)
-            elif loopCount < 69000:
-             	r.move(1000, roverCommandPeriod)
-            elif loopCount < 70000:
-              	r.move(-1, roverCommandPeriod)
-            elif loopCount < 73000:
-              	r.move(1000, roverCommandPeriod)
-            elif loopCount < 74000:
-              	r.move(-1, roverCommandPeriod)
-            elif loopCount < 77000:
-             	r.move(1000, roverCommandPeriod)
-            elif loopCount < 78000:
-              	r.move(-1, roverCommandPeriod)
-            elif loopCount < 81000:
-              	r.move(1000, roverCommandPeriod)
-            elif loopCount < 82000:
-               	r.move(-1, roverCommandPeriod)
-            elif loopCount < 149000:
-               	r.move(1000, roverCommandPeriod)
-        	# if receivedMessage[0] == 1:
-        	# 	r.move(-receivedMessage[1])
-        	# elif receivedMessage[0] == 0:
-        	# 	r.move(receivedMessage[1])
-
-        	# Update the rover command
+            comm.sendMessage(systs[1].getSequenceNum(), systs[1].getLastLocation()[0], systs[1].getLastLocation()[1], systs[1].getComm())
+            print("Sensor messaged sampled rover location to control", systs[1].getLastLocation()[0], systs[1].getLastLocation()[1])
+            receivedMessage = comm.receiveMessage(systs[0].getComm())
+            print ("Control messaged rover.", receivedMessage[0], receivedMessage[1])
+            r.move(receivedMessage[1], roverCommandPeriod)
+            
 
         print("radius", receivedMessage[1])
         print("sign", receivedMessage[0])
 
-        if loopCount == 150000:
+        if loopCount == 25000:
         	break;
 
         # if ((time - movementStart) < movementDurration) and executingCommand == True:

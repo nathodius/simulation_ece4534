@@ -19,7 +19,6 @@ def initComm(port):
 		pass 
                 comm.open()
                 print("Openning communication")
-                comm.flushInput()
                 comm.flushOutput()
         except Exception, e:
                 print "error open serial port: " + str(e)
@@ -44,34 +43,12 @@ def sendMessage(sequenceNum, field1, field2, comm):
         if field2 > 9999:
                 field2 = 9999
 
-        field1_bytes = [None, None, None, None]
-        field2_bytes = [None, None, None, None]
+        field1 = int(field1)
+        field2 = int(field2)
 
-        field1_bytes[3] = field1 % 10;
-        field1 /= 10;
-        field1_bytes[2] = field1 % 10;
-        field1 /= 10;
-        field1_bytes[1] = field1 % 10;
-        field1 /= 10;
-        field1_bytes[0] = field1 % 10;
-        field1 /= 10;
-
-        field2_bytes[3] = field2 % 10;
-        field2 /= 10;
-        field2_bytes[2] = field2 % 10;
-        field2 /= 10;
-        field2_bytes[1] = field2 % 10;
-        field2 /= 10;
-        field2_bytes[0] = field2 % 10;
-        field2 /= 10;
-
-        for i in range(4):
-                comm.write(chr(int(field1_bytes[i])))
-                #print("Sending byte of field1", i, chr(int(field1_bytes[i])))
-
-        for i in range(4):
-                comm.write(chr(int(field2_bytes[i])))
-                #print("Sending byte of field2", i, chr(int(field2_bytes[i])))
+        print("field 1", field1)
+        print("field 2", field2)
+        comm.write(str(field1).zfill(4) + str(field2).zfill(4))
 
 def receiveMessage(comm):
         """Rover receives message from control"""

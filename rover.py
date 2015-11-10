@@ -165,6 +165,8 @@ class rover:
             print("forward y", y)
             self.setPosition((self.getPosition()[0] + x), (self.getPosition()[1] + y))
             print ("going straight")
+            # + forward speed error -> veers right
+            self.setOrientation(self.getOrientation() - self.getForwardSpeedError())
 
     	elif (r < 0):
 
@@ -258,12 +260,12 @@ class rover:
             self.setOrientation(self.getOrientation() + angle)
 
 
-    	if (self.position[0][0] > 150) or (self.position[0][0] < 0):
-    	    print ("Rover moved out of X boundaries.")
-			return False
-     	if (self.position[0][1] > 75 + self.buff) or (self.position[0][0] < self.buff):
-     		print ("Rover moved out of Y boundaries.")
-			return False
+            if (self.position[0][0] > 150) or (self.position[0][0] < 0):
+                print ("Rover moved out of X boundaries.")
+                return False
+            if (self.position[0][1] > 75 + self.buff) or (self.position[0][0] < self.buff):
+                print ("Rover moved out of Y boundaries.")
+                return False
 
     	print("moved to", self.getPosition()[0], self.getPosition()[1])
      	return True
