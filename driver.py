@@ -204,10 +204,11 @@ def main(argv):
             elif receivedMessage[0] == 2:
                 r.move(receivedMessage[1], roverCommandPeriod)
             elif receivedMessage[0] == 1: # going straight
-            	r.move(10000, roverCommandPeriod)
-            elif receivedMessage[0] == 0:
-            	# stop.
-            	r.stop()
+            	if receivedMessage[1] == 0:
+            		r.stop()
+            	else:
+            		r.move(10000, roverCommandPeriod)
+
 
         if loopCount == 100000:
         	break;
