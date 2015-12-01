@@ -10,6 +10,7 @@ import comm
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from math import pi
+import random
 
 def buildMap(mapFileName):
 	return theMap(mapFileName)
@@ -189,19 +190,26 @@ def main(argv):
        	# Sensor messages most recent sensor sample to controller.
        	# Control messages rover. 
        	# Rover Messages control. 
-        if loopCount % 1000 == 0:
+        if loopCount % 1000 == 0 and loopCount > 0:
 
             comm.sendMessage(systs[1].getSequenceNum(), systs[1].getLastLocation()[0], systs[1].getLastLocation()[1], systs[1].getComm())
             print("Sensor messaged sampled rover location to control", systs[1].getLastLocation()[0], systs[1].getLastLocation()[1])
             receivedMessage = comm.receiveMessage(systs[0].getComm())
             print ("Control messaged rover.", receivedMessage[0], receivedMessage[1])
-            r.move(receivedMessage[1], roverCommandPeriod)
-            
+            print("radius", receivedMessage[1])
+            print("sign", receivedMessage[0])
+            if receivedMessage[0] == 3:
+                r.move(0-(receivedMessage[1]), roverCommandPeriod)
+                print("radius is", 0-receivedMessage[1])
+            elif receivedMessage[0] == 2:
+                r.move(receivedMessage[1], roverCommandPeriod)
+            elif receivedMessage[0] == 1: # going straight
+            	r.move(10000, roverCommandPeriod)
+            elif receivedMessage[0] == 0:
+            	# stop.
+            	r.stop()
 
-        print("radius", receivedMessage[1])
-        print("sign", receivedMessage[0])
-
-        if loopCount == 25000:
+        if loopCount == 100000:
         	break;
 
         # if ((time - movementStart) < movementDurration) and executingCommand == True:
@@ -216,7 +224,9 @@ def main(argv):
     pass
 
     print("times", r.getMovementTimes())
-    plt.plot([0, 74], [25, 25])
+    plt.plot([0, 50], [25, 25])
+    plt.plot([50, 50], [25, 50])
+    plt.plot([50, 100], [50,50])
     plt.plot(r.getXHist(), r.getYHist(), 'ro')
     plt.ylabel('Rover Position')
     plt.axis([0, 150, 0, 75])

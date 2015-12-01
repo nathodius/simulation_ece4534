@@ -21,7 +21,7 @@ class sensor:
     	self.clockwiseRotation = True
 
         self.lastSample = None
-        self.lastLocation = [None, None]
+        self.lastLocation = [0, 0]
 
         self.port = port
         self.comm = initComm(port)

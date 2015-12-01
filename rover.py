@@ -8,6 +8,7 @@ from math import atan2
 from comm import initComm
 from math import ceil
 import time
+import random
 
 class rover:
     """The rover simulator class"""
@@ -116,24 +117,6 @@ class rover:
         return self.messagePeriod
 
 
-    # def rotateRight(self, durration):
-    # 	rotation = self.rotationSpeed * durration
-    # 	self.orientation[0] = self.orientation[0] - rotation
-    # 	if self.orientation[0] <= 0:
-    # 		self.orientation[0] = 360 + self.orientation[0]
-
-    # 	if self.orientation[0] == 360:
-    # 		self.orientation[0] = 0
-
-    # def rotateLeft(self, durration):
-    # 	rotation = self.rotationSpeed * durration
-    # 	self.orientation[0] = self.orientation[0] + rotation
-    # 	if self.orientation[0] >= 360:
-    # 		self.orientation[0] = self.orientation[0] - 360
-
-    # 	if self.orientation[0] == 360:
-    # 		self.orientation[0] = 0
-
     def move(self, r, durration):
     	"""The rover's movement method"""
     	# Positive radius: rightward turn.
@@ -166,7 +149,7 @@ class rover:
             self.setPosition((self.getPosition()[0] + x), (self.getPosition()[1] + y))
             print ("going straight")
             # + forward speed error -> veers right
-            self.setOrientation(self.getOrientation() - self.getForwardSpeedError())
+            self.setOrientation(self.getOrientation()) # random error and bias.
 
     	elif (r < 0):
 
@@ -184,88 +167,64 @@ class rover:
             # Find the origin of the circle.
             directionToOrigin = self.getOrientation() + pi/2
 
+            delta_theta = dist/r
+            x = 0
+            y = -1*r
+            x_local = x * cos(delta_theta) - y * sin(delta_theta) + 0
+            y_local = x * sin(delta_theta) + y * cos(delta_theta) + r
 
-            yIncrease = r * sin(directionToOrigin)
-            ("y from rover to origin", yIncrease)
-            xIncrease = r * cos(directionToOrigin)
-            ("x from rover to origin", xIncrease)
-            origin = (self.getPosition()[0] + xIncrease, self.getPosition()[1] + yIncrease)
-            print ("origin of the circle", origin)
+            delta_x_t = x_local * cos(self.getOrientation()) - y_local * sin(self.getOrientation())
+            delta_y_t = x_local * sin(self.getOrientation()) + y_local * cos(self.getOrientation())
 
-            xToPoint = cos(pi/2 - angleToPoint)*r
-            print ("x from origin to destination", xToPoint)
-            yToPoint = sin(pi/2 - angleToPoint)*r
-            print ("y from origin to destination", yToPoint)
+            x_t = self.getPosition()[0] + delta_x_t
+            y_t = self.getPosition()[1] + delta_y_t
+            self.setPosition(x_t, y_t)
 
-            if self.getOrientation() > 1.5708:
-                point = (origin[0] - xToPoint, origin[1] + yToPoint)
-            else:
-                point = (origin[0] + xToPoint, origin[1] - yToPoint)
-            #   print("point we're going to", point)
+            self.setOrientation(self.getOrientation() + delta_theta)
 
-            self.setPosition(point[0], point[1])
-
-            angle = atan2(xToPoint, yToPoint)
-            if angle < 0:
-                angle = 2*pi + angle
-
-			# Update the rover's orientation
-            self.setOrientation(self.getOrientation() + angle)
-
-            print("Rover orientation", self.getOrientation())
+            if abs(self.getOrientation() / 6.78) >= 1:
+                print 'reset theta'
+                if self.getOrientation() > 0:
+                    setOrientation(self.getOrientation() - 6.28)
 
     	elif (r > 0): # Turn right.
 
             print("turning right")
 
+
+            print "turning left"
+
+            # convert to positive radians
+
             r = abs(r)
 
-            #r = abs(r)
             circum = 2*pi*r
-            print ("circumference", circum)
 
             angleToPoint =  (dist/circum) * 2*pi # In radians.
-            print ("angle to point", angleToPoint)
+            print ("angle from rover to destination", angleToPoint)
 
-            # Find the origin of the circle. 
-            directionToOrigin = self.getOrientation() - pi/2
-            print("direction to origin", directionToOrigin)
+            # Find the origin of the circle.
+            directionToOrigin = self.getOrientation() + pi/2
 
-            #print ("direction to origin", directionToOrigin)
-            xIncrease = r * cos(directionToOrigin)
-            yIncrease = r * sin(directionToOrigin)
-            origin = (self.getPosition()[0] + xIncrease, self.getPosition()[1] + yIncrease)
-            print ("origin of the circle", origin)
+            delta_theta = dist/r
+            x = 0
+            y = -1*r
+            x_local = x * cos(delta_theta) - y * sin(delta_theta) + 0
+            y_local = x * sin(delta_theta) + y * cos(delta_theta) + r
 
-            xToPoint = sin(angleToPoint)*r
-            print ("x from origin to point", xToPoint)
-            yToPoint = cos(angleToPoint)*r
-            print ("y from origin to point", yToPoint)
+            delta_x_t = x_local * cos(self.getOrientation()) - y_local * sin(self.getOrientation())
+            delta_y_t = x_local * sin(self.getOrientation()) + y_local * cos(self.getOrientation())
 
-            if self.getOrientation() > -1.5708:
-                point = (origin[0] + xToPoint, origin[1] + yToPoint)
-            else:
-                point = (origin[0] - xToPoint, origin[1] - yToPoint)
-            #print("point we're going to", point)
+            x_t = self.getPosition()[0] + delta_x_t
+            y_t = self.getPosition()[1] + delta_y_t
+            self.setPosition(x_t, y_t)
 
-            self.setPosition(point[0], point[1])
+            self.setOrientation(self.getOrientation() - delta_theta)
 
-            angle = atan2(xToPoint, yToPoint)
-            if angle < 0:
-                angle = 2*pi + angle
-
-            angle = 0 - angle # right turn
-
-			# Update the rover's orientation
-            self.setOrientation(self.getOrientation() + angle)
-
-
-            if (self.position[0][0] > 150) or (self.position[0][0] < 0):
-                print ("Rover moved out of X boundaries.")
-                return False
-            if (self.position[0][1] > 75 + self.buff) or (self.position[0][0] < self.buff):
-                print ("Rover moved out of Y boundaries.")
-                return False
+            if abs(self.getOrientation() / 6.78) >= 1:
+                print 'reset theta'
+                if self.getOrientation() > 0:
+                    setOrientation(self.getOrientation() - 6.28)
 
     	print("moved to", self.getPosition()[0], self.getPosition()[1])
      	return True
