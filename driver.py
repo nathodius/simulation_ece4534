@@ -210,7 +210,7 @@ def main(argv):
             		r.move(10000, roverCommandPeriod)
 
 
-        if loopCount == 100000:
+        if loopCount == 200000:
         	break;
 
         # if ((time - movementStart) < movementDurration) and executingCommand == True:
@@ -225,13 +225,31 @@ def main(argv):
     pass
 
     print("times", r.getMovementTimes())
-    plt.plot([0, 50], [25, 25])
-    plt.plot([50, 50], [25, 50])
-    plt.plot([50, 100], [50,50])
+
+    plt.plot([0, 50], [35, 35])
+    plt.plot([50, 50], [35, 60])
+    plt.plot([50, 100], [60,60])
+    #plt.plot([100, 100], [25,50])
     plt.plot(r.getXHist(), r.getYHist(), 'ro')
     plt.ylabel('Rover Position')
     plt.axis([0, 150, 0, 75])
     plt.show()
+
+    # plt.plot([0, 50], [60, 60])
+    # plt.plot([50, 50], [10, 60])
+    # plt.plot([50, 75], [10,10])
+    # plt.plot(r.getXHist(), r.getYHist(), 'ro')
+    # plt.ylabel('Rover Position')
+    # plt.axis([0, 150, 0, 75])
+    # plt.show()
+
+    # plt.plot([0, 50], [60, 60])
+    # plt.plot([50, 50], [35, 60])
+    # plt.plot([0, 50], [35,35])
+    # plt.plot(r.getXHist(), r.getYHist(), 'ro')
+    # plt.ylabel('Rover Position')
+    # plt.axis([0, 150, 0, 75])
+    # plt.show()
 
     # fig = plt.figure()
     # ax = fig.add_subplot(111, projection='3d')

@@ -111,6 +111,7 @@ class rover:
         return self.times
 
     def stop(self):
+        print "stopped!!!"
         pass # do
 
     def getMessagePeriod(self):
